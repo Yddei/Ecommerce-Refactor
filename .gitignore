@@ -1,0 +1,10 @@
+#from webserver
+*.class
+school-project-legacy/WEB-INF/lib/
+
+#others
+target/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
