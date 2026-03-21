@@ -1,7 +1,7 @@
 # E-Bookshop: Architecture Refactor
 
 ## Overview
-This project aims to convert a typical schoolwork using **Jakarta EE Monolith** into a modern **Microservices** architecture.
+This project aims to convert a typical schoolwork using Jakarta EE Monolith into a modern Microservices architecture.
 
 ## Phases of this webserver
 - **Phase 1 (Legacy):** IM2073 Jakarta EE (Servlets/JDBC) running on Tomcat.
@@ -9,5 +9,5 @@ This project aims to convert a typical schoolwork using **Jakarta EE Monolith** 
 
 ## Key Technical Shifts
 - **Language:** Migrating from Pure Java to a Java + Node.js.
-- **Infrastructure:** Moving from manual server installs to **Docker Containerization**.
+- **Infrastructure:** Moving from manual server installs to Docker Containerization.
 
