@@ -2,7 +2,6 @@
 *.class
 school-project-legacy/WEB-INF/lib/
 target/
-application.properties
 
 
 #others
