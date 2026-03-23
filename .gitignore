@@ -1,0 +1,9 @@
+.env
+target/
+*.class
+application.properties
+
+
+.idea/
+.vscode/
+*.iml
