@@ -1,5 +1,12 @@
 # E-Bookshop: Architecture Refactor
 
+## How to Start
+- **Requirements:** Maven, Docker
+- **Steps:**
+    - cd to /backend-java-springboot
+    - run ```mvn clean package```
+    - run ```docker-compose up --build -d```
+    
 ## Overview
 This project aims to convert a typical schoolwork using Jakarta EE Monolith into a modern Microservices architecture.
 

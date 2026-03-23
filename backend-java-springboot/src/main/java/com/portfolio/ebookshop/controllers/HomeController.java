@@ -1,14 +1,12 @@
 package com.portfolio.ebookshop.controllers;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/home")
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping
     public Map<String, String> home() {
         System.out.println("Spring boot!");
         return Map.of(

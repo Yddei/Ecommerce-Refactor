@@ -1,9 +1,13 @@
-.env
-target/
+#from webserver
 *.class
+school-project-legacy/WEB-INF/lib/
+target/
 application.properties
 
 
-.idea/
+#others
 .vscode/
-*.iml
+.idea/
+.DS_Store
+Thumbs.db
+.env
