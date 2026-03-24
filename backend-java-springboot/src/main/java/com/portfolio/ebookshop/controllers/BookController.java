@@ -13,8 +13,10 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     //get all
     @GetMapping

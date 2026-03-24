@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link href="/index_files/bootstrap.min.css" rel="stylesheet">
+    <link href="/index_files/cover.css" rel="stylesheet">
+</head>
+
+<body class="d-flex min-vh-100 text-center text-white bg-dark">
+    
+<div class="cover-container d-flex w-100 min-vh-100 p-3 mx-auto flex-column">
+  
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">books or smth</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link fw-bold py-1 px-0" href="/home.html">Home</a>
+        <a class="nav-link fw-bold py-1 px-0 ms-3 active" href="/login.html">Login</a>
+        <a class="nav-link fw-bold py-1 px-0 ms-3" href="/register.html">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3 mb-5">
+    <h1>Login</h1>
+    
+    <form id="loginForm" class="text-start mt-4">
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+
+        <div id="errorMessage" class="text-danger mb-3 fw-bold"></div>
+
+        <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white w-100 mt-4">
+            Log In
+        </button>
+    </form>
+    
+    <p class="mt-3 text-white-50">
+        Don't have an account? <a href="/register.html" class="text-white">Register here</a>.
+    </p>
+
+  </main>
+
+  <footer class="mt-auto text-white-50">
+      <p>Template credits to: <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+  </footer>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); 
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            if (response.ok) {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = '/home.html';
+            } 
+            else {
+                const errorText = await response.text();
+                document.getElementById('errorMessage').innerText = errorText;
+            }
+        } catch (error) {
+            document.getElementById('errorMessage').innerText = "Server is currently offline.";
+        }
+    });
+</script>
+
+</body>
+</html>

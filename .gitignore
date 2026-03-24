@@ -2,7 +2,7 @@
 *.class
 school-project-legacy/WEB-INF/lib/
 target/
-
+node_modules/
 
 #others
 .vscode/

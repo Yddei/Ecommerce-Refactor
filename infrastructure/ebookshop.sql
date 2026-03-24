@@ -41,10 +41,4 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE RESTRICT
 );
 
---dummy data fields
-INSERT IGNORE INTO books (id, title, author, price, qty, img) VALUES
-(1, 'Java for dummies', 'Tan Ah Teck', 11.11, 11, '1.jpg'),
-(2, 'More Java for dummies', 'Tan Ah Teck', 22.22, 22, '2.jpg'),
-(3, 'More Java for more dummies', 'Mohammad Ali', 33.33, 33, '3.jpg'),
-(4, 'A Cup of Java', 44.44, 44, '4.jpg'),
-(4, 'A Teaspoon of Java', 55.55, 55, '5.jpg');
+
