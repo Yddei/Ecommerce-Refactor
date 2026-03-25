@@ -1,68 +1,53 @@
 package com.portfolio.ebookshop.controllers;
 
-import com.portfolio.ebookshop.models.User;
-import com.portfolio.ebookshop.repos.UserRepository;
+import com.portfolio.ebookshop.services.UserService;
 import com.portfolio.ebookshop.dto.LoginRequest;
 import com.portfolio.ebookshop.dto.RegistrationRequest; 
 
 import jakarta.validation.Valid; 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
     //REGISTER
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest requestDto) {
-        //Check duplicate
-        if (userRepository.findByEmailIgnoreCase(requestDto.getEmail()) != null ) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already registered");
+        try {
+            userService.registerUser(requestDto);
+            return ResponseEntity.ok("Registered");
         }
-        //Hash password
-        String hashed = passwordEncoder.encode(requestDto.getPassword());
-        //Map after DTO to database
-        User newUser = new User();
-        newUser.setUsername(requestDto.getUsername());
-        newUser.setEmail(requestDto.getEmail());
-        newUser.setPassword(hashed);
-        newUser.setAddress(requestDto.getAddress());
-
-        userRepository.save(newUser);
-        return ResponseEntity.ok("Registered successfully");
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     //LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginDto) {
-        
-        //using /repos/UserRepository.java:
-        User existingUser = userRepository.findByEmailIgnoreCase(loginDto.getEmail());
-        
-        //invalid credentials
-        if (existingUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-        
-        //match hashes
-        boolean isPasswordMatch = passwordEncoder.matches(loginDto.getPassword(), existingUser.getPassword());
+        try {
+            String token = userService.loginUser(loginDto);
 
-        //pass
-        if (isPasswordMatch) {
-            return ResponseEntity.ok("Login successful"); 
+            Map<String, String> response = new HashMap<>();
+            response.put("token", token);
+
+            return ResponseEntity.ok(response);
         }
-        //fail
-        else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 }

@@ -30,6 +30,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
+      APP_JWT_SECRET: ${JWT_SECRET}
+      APP_JWT_ISSUER: ebookshop-api
     networks:
       - ebookshop-network
   #Node gateway

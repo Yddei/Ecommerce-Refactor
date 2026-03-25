@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS ebookshop;
 USE ebookshop;
 
---Users table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -10,7 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
     address VARCHAR(255)
 );
 
---Books table
 CREATE TABLE IF NOT EXISTS books (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
@@ -20,7 +18,6 @@ CREATE TABLE IF NOT EXISTS books (
     img VARCHAR(255)
 );
 
---Orders table
 CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -30,7 +27,6 @@ CREATE TABLE IF NOT EXISTS orders (
     status VARCHAR(20)
 );
 
---Order Items table
 CREATE TABLE IF NOT EXISTS order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
@@ -40,5 +36,3 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE RESTRICT
 );
-
-

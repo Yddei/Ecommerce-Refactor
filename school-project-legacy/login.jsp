@@ -40,7 +40,7 @@
     <form action="<c:url value='/login' />" method="POST" class="text-start mt-4">
         
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label for="email" class="form-label">email</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
         

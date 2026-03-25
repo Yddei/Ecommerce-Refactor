@@ -18,7 +18,8 @@ public class SecurityConfig {
             .cors(cors -> cors.configure(http))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/books", "/api/books/**").permitAll() 
-                .requestMatchers("/api/register", "/api/register/**").permitAll()
+                .requestMatchers("/api/auth/register", "/api/auth/register/**").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/home").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    
+    <link href="/index_files/bootstrap.min.css" rel="stylesheet">
+    <link href="/index_files/cover.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+</head>
+
+<body class="d-flex min-vh-100 text-center text-white bg-dark">
+    
+<div class="cover-container d-flex w-100 min-vh-100 p-3 mx-auto flex-column">
+  
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">books or smth</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link fw-bold py-1 px-0" href="/home.html">Home</a>
+        <a class="nav-link fw-bold py-1 px-0 ms-3" href="/login.html">Login</a>
+        <a class="nav-link fw-bold py-1 px-0 ms-3 active" aria-current="page" href="/register.html">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3 mb-5">
+    <h1>Register</h1>
+    
+    <form id="registerForm" class="text-start mt-4">
+        
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" required>
+        </div>
+
+        <div id="errorMessage" class="text-danger mb-3 fw-bold"></div>
+        <div id="successMessage" class="text-success mb-3 fw-bold"></div>
+
+        <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white w-100 mt-4">
+            Create Account
+        </button>
+    </form>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+      <p>Template credits to: <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+  </footer>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); 
+        
+        document.getElementById('errorMessage').innerText = '';
+        document.getElementById('successMessage').innerText = '';
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const address = document.getElementById('address').value;
+
+        //match password on client side
+        if (password !== confirmPassword) {
+            document.getElementById('errorMessage').innerText = "Passwords do not match!";
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    username: username, 
+                    email: email, 
+                    password: password,
+                    address: address
+                })
+            });
+
+            if (response.ok) {
+                //store in storage, in login.html flash the message
+                localStorage.setItem('toast', 'Account created successfully');
+                window.location.href = '/login.html';
+            } else {
+                const errorText = await response.text();
+                document.getElementById('errorMessage').innerText = "Server error.";
+            }
+        } catch (error) {
+            document.getElementById('errorMessage').innerText = "Server error.";
+        }
+    });
+</script>
+
+</body>
+</html>
