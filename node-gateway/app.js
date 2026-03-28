@@ -1,22 +1,27 @@
 require('dotenv').config();
 const path = require('path');
-const port = process.env.NODE_PORT;
+const node_port = process.env.NODE_PORT;
+const spring_boot_port = process.env.SPRING_BOOT_PORT;
 const express = require('express');
 const app = express();
 
-const authRoutes = require('./modules/auth/auth.routes.js')
+const {createProxyMiddleware} = require('http-proxy-middleware');
 
 
+app.use(createProxyMiddleware({
+    pathFilter: '/api',
+    target: `http://ebookshop-api:${spring_boot_port}`,
+    changeOrigin: true,
+    pathRewrite: (path, req) => path, 
+    onProxyReq: (proxyReq, req, res) => {
+        console.log(`[Proxying] ${req.method} ${req.url} -> http://ebookshop-api:${spring_boot_port}${req.url}`);
+    },
+    onError: (err, req, res) => {
+        console.error("Proxy Error:", err);
+    }
+}));
 app.use(express.json());
 app.use(express.static('public'));
-
-//mounting routes
-app.use('/api/auth', authRoutes);
-
-
-
-
-
 
 
 //get pages
@@ -39,4 +44,4 @@ app.get('/register', (req, res) => {
 
 
 //Run
-app.listen(port, ()=> console.log('node.js server started on port ' + port));
+app.listen(node_port, ()=> console.log('node.js server started on port ' + node_port));

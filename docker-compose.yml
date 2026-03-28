@@ -28,6 +28,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
+      SPRING_SQL_INIT_MODE: always
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       APP_JWT_SECRET: ${JWT_SECRET}
@@ -44,6 +45,7 @@ services:
     environment:
       NODE_PORT: ${NODE_PORT}
       BACKEND_URL: ${BACKEND_URL_DOCKER}
+      SPRING_BOOT_PORT: ${SPRING_BOOT_PORT}
     depends_on:
       - ebookshop-api
     networks:
