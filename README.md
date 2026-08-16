@@ -16,7 +16,7 @@ This project aims to convert a typical schoolwork using Jakarta EE Monolith into
   - [x] Containerisation (Docker)
   - [x] Implement authentication system
   - [x] API Gateway
-  - [x] ~~Implement CORS and ~~configure SecurityConfig.java
+  - [x] ~~Implement CORS and~~ configure SecurityConfig.java
   - [x] Service Decoupling
     - [x] Auth
     - [x] Shop
